@@ -10,6 +10,8 @@ source 'https://rubygems.org'
 gem 'rails', '~> 5.1.6'
 # Use sqlite3 as the database for Active Record
 ##gem 'sqlite3'
+# 3.2 Bootstrapの追加
+gem 'bootstrap-sass'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -55,4 +57,7 @@ group :development do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+# Windows環境ではtzinfo-dataというgemを含める必要があります
+# Mac環境でもこのままでOKです
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
