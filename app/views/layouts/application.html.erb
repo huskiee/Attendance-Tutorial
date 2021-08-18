@@ -30,6 +30,13 @@
     <!-- 3.3 パーシャルを使おう.headerの内容がこの1行で収まる -->
     <%= render 'layouts/header' %>
     <div class="container">
-     <%= yield %>
+      <!-- 5.5.6 サクセスメッセージを表示 -->
+      <% flash.each do |message_type, msg| %>
+      <div class="alert alert-<%= message_type %>"><%= msg %></div>
+      <% end %>
+      <%= yield %>
+      <!-- 5.1 レイアウトにデバッグ情報を追加 -->
+      <%= debug(params) if Rails.env.development? %>
+    </div>
   </body>
 </html>
