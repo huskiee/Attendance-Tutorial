@@ -1,9 +1,14 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
+    <!-- 3.4 リンクを設定 -->
+    <!-- <%= link_to "Attendance App", '#', id: "logo" %> -->
     <%= link_to "Attendance App", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
+        <!-- 3.4 リンクを設定 -->
+        <!-- <li><%= link_to "Top",   '#' %></li> -->
         <li><%= link_to "Top", root_path %></li>
+        <!-- 6.4 レイアウトのログイン＆ログアウト仕様に対応 -->
         <% if logged_in? %>
           <li><%= link_to "Users", '#' %></li>
           <li class="dropdown">
@@ -20,8 +25,9 @@
             </ul>
           </li>
         <% else %>
-          <li><%= link_to "Log in", login_path %></li>
-        <% end %>
+        <!-- 6.2.1 ログインページへのリンクも設定 -->
+        <!-- <li><%= link_to "Log in", '#' %></li> -->
+        <li><%= link_to "Log in", login_path %></li>
       </ul>
     </nav>
   </div>

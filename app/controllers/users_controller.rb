@@ -12,6 +12,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      ## 6.5 ユーザー登録と同時にログインする
+      log_in @user # 保存成功後、ログインします。
       ## 5.5.6 サクセスメッセージを表示
       flash[:success] = '新規作成に成功しました。'
       ## 5.5.5 ユーザーを保存
