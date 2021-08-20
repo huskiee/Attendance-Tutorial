@@ -6,9 +6,28 @@ module SessionsHelper
     session[:user_id] = user.id
   end
   
+  ## 7.1.3 ログイン状態の永続的保持
+  # 永続的セッションを記憶します（Userモデルを参照）
+  def remember(user)
+    user.remember
+    cookies.permanent.signed[:user_id] = user.id
+    cookies.permanent[:remember_token] = user.remember_token
+  end
+  
+  ## 7.1.4 ユーザーの記憶を忘れる
+  # 永続的セッションを破棄します
+  def forget(user)
+    user.forget # Userモデル参照
+    cookies.delete(:user_id)
+    cookies.delete(:remember_token)
+  end
+  
   ##6.6 ログアウト機能を追加
   # セッションと@current_userを破棄します
   def log_out
+    ##session.delete(:user_id)
+    ## 7.1.4 ユーザーの記憶を忘れる
+    forget(current_user)
     session.delete(:user_id)
     @current_user = nil
   end
@@ -18,6 +37,13 @@ module SessionsHelper
   def current_user
     if session[:user_id]
       @current_user ||= User.find_by(id: session[:user_id])
+    ## 7.1.3 ログイン状態の永続的保持
+    elsif (user_id = cookies.signed[:user_id])
+      user = User.find_by(id: user_id)
+      if user && user.authenticated?(cookies[:remember_token])
+        log_in user
+        @current_user = user
+      end
     end
   end
    

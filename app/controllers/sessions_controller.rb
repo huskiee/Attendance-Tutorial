@@ -7,6 +7,10 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       log_in user
+      ## 7.1.3 ログイン状態の永続的保持
+      ##remember user
+      ## 7.3 チェックボックスを追加
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       redirect_to user
     else
       flash.now[:danger] = '認証に失敗しました。'
@@ -15,7 +19,10 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    ## log_out
+    ## 7.2 ふたつの小さなバグを直す
+    # ログイン中の場合のみログアウト処理を実行します。
+    log_out if logged_in?
     flash[:success] = 'ログアウトしました。'
     redirect_to root_url
   end
