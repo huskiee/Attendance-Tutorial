@@ -17,3 +17,21 @@
 .btn-signup {
   margin-top: 10px;
 }
+
+//*8.1 ユーザー編集ページを作る
+.label-user--edit {
+  margin-top: 5px;
+}
+
+.btn-user--edit {
+  margin-top: 10px;
+}
+
+//*8.4 全てのユーザーを表示するページ
+/* ユーザー一覧ページ */
+
+#table-users {
+  td {
+    vertical-align: middle;
+  }  
+}

@@ -10,7 +10,9 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  ## 8.1.4 パスワードはスルーして更新できるようにする
+  ##validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   ## 7.1.1 ランダムな文字列を作る
   # 渡された文字列のハッシュ値を返します。
@@ -51,4 +53,5 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
+  
 end

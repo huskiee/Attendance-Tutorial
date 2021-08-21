@@ -10,10 +10,15 @@ source 'https://rubygems.org'
 gem 'rails', '~> 5.1.6'
 ## 4.5 パスワードの設定を追加するgemです
 gem 'bcrypt'
+## 8.4 全てのユーザーを表示するページ
+gem 'faker' # この行を追加してください。
 # Use sqlite3 as the database for Active Record
 ##gem 'sqlite3'
 # 3.2 Bootstrapの追加
 gem 'bootstrap-sass'
+## 8.4.2 ページネーションを使おう
+gem 'will_paginate' # この行を追加してください。
+gem 'bootstrap-will_paginate' # この行を追加してください。
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets

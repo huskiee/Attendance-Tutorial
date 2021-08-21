@@ -11,7 +11,9 @@ class SessionsController < ApplicationController
       ##remember user
       ## 7.3 チェックボックスを追加
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      redirect_to user
+      ## 8.3 フレンドリーフォワーディング(親切な転送（リダイレクト）)機能を追加
+      ##redirect_to user
+      redirect_back_or user
     else
       flash.now[:danger] = '認証に失敗しました。'
       render :new

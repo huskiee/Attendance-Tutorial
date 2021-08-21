@@ -35,8 +35,11 @@ module SessionsHelper
   ##6.3.2 current_userを定義
   # 現在ログイン中のユーザーがいる場合オブジェクトを返します。
   def current_user
-    if session[:user_id]
-      @current_user ||= User.find_by(id: session[:user_id])
+    ## 8.2.2 正しいユーザーであることを要求
+    ##if session[:user_id]
+    if (user_id = session[:user_id])
+      ##@current_user ||= User.find_by(id: session[:user_id])
+      @current_user ||= User.find_by(id: user_id)
     ## 7.1.3 ログイン状態の永続的保持
     elsif (user_id = cookies.signed[:user_id])
       user = User.find_by(id: user_id)
@@ -46,10 +49,29 @@ module SessionsHelper
       end
     end
   end
+  
+  ## 8.2.2 正しいユーザーであることを要求する
+  # 渡されたユーザーがログイン済みのユーザーであればtrueを返します。
+  def current_user?(user)
+    user == current_user
+  end
    
   ##6.4.1 レイアウトのログイン＆ログアウト仕様に対応
   # 現在ログイン中のユーザーがいればtrue、そうでなければfalseを返します。
   def logged_in?
     !current_user.nil?
+  end
+  
+  ## 8.3 フレンドリーフォワーディング(親切な転送（リダイレクト）)機能を追加
+  # 記憶しているURL(またはデフォルトURL)にリダイレクトします。
+  def redirect_back_or(default_url)
+    redirect_to(session[:forwarding_url] || default_url)
+    session.delete(:forwarding_url)
+  end
+
+  ## 8.3 フレンドリーフォワーディング(親切な転送（リダイレクト）)機能を追加
+  # アクセスしようとしたURLを記憶します。
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?
   end
 end
