@@ -8,6 +8,8 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
+## 8x.1 日本語、国際化
+gem 'rails-i18n'
 ## 4.5 パスワードの設定を追加するgemです
 gem 'bcrypt'
 ## 8.4 全てのユーザーを表示するページ
