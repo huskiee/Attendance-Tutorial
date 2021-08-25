@@ -2,17 +2,18 @@ class UsersController < ApplicationController
   ## 8.2.2 正しいユーザーであることを要求する
   ##before_action :set_user, only: [:show, :edit, :update]
   ## 8.5.2 destroyアクション
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  ## 9.3.1 モーダルウインドウを表示(, :edit_basic_info, :update_basic_infoの追加)
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   ## 8.2.1 ユーザーにログインを要求する
   ##before_action :logged_in_user, only: [:show, :edit, :update]
   ## 8.4 全てのユーザーを表示するページ
   ##before_action :logged_in_user, only: [:index, :show, :edit, :update]
   ## 8.5.2 destroyアクション
-  before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   ## 8.2.2 正しいユーザーであることを要求する
   before_action :correct_user, only: [:edit, :update]
   ## 8.5.2 destroyアクション
-  before_action :admin_user, only: :destroy
+  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
   
   ## 8.4 全てのユーザーを表示するページ
   def index
@@ -23,7 +24,8 @@ class UsersController < ApplicationController
   
   ## 5.2 Usersリソース(findメソッドを使ってユーザーオブジェクトを取得してインスタンス変数を代入)
   def show
-    @user = User.find(params[:id])
+  ## 9.3.1 モーダルウインドウを表示  
+    ##@user = User.find(params[:id])
   end
   
   def new
@@ -46,12 +48,14 @@ class UsersController < ApplicationController
   
   ## 8.1 ユーザー編集ページを作る
   def edit
-    @user = User.find(params[:id])
+    ## 9.3.1 モーダルウインドウを表示  
+    ##@user = User.find(params[:id])
   end
   
   ## 8.1.2 更新に失敗した場合の処理
   def update
-    @user = User.find(params[:id])
+    ## 9.3.1 モーダルウインドウを表示  
+    ##@user = User.find(params[:id])
     if @user.update_attributes(user_params)
       # 更新に成功した場合の処理を記述します。
       ## 8.1.3 更新に成功した場合の処理
@@ -69,12 +73,40 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
+  ## 9.3.1 モーダルウインドウを表示
+  def edit_basic_info
+  end
+
+  ## 9.3.1 モーダルウインドウを表示
+  def update_basic_info
+    ## 9.3.2 更新アクションを完成させよう
+    if @user.update_attributes(basic_info_params)
+      # 更新成功時の処理
+      flash[:success] = "#{@user.name}の基本情報を更新しました。"
+    else
+      # 更新失敗時の処理
+      flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+    end
+    redirect_to users_url
+  end
+  
+  
+  
   ## 5.5.3 Strong Parameters  
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      ## 9.1.3 StrongParameters（user_paramsにdepartment属性を加えて対応）
+      params.require(:user).permit(:name, :email, :department, :password, :password_confirmation)
     end
+  
+    ## 9.3.2 更新アクションを完成
+    def basic_info_params
+      params.require(:user).permit(:department, :basic_time, :work_time)
+    end
+  
+  
+  
   
   ## 8.2.1 ユーザーにログインを要求する
   # beforeフィルター

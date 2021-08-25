@@ -9,6 +9,12 @@
     <thead>
       <tr>
         <th><%= User.human_attribute_name :name %></th>
+        <!-- 9.3.1 モーダルウインドウを表示(管理者権限の明確化) -->
+        <th class="center"><%= User.human_attribute_name :department %></th>
+        <% if current_user.admin? %>
+          <th class="center"><%= User.human_attribute_name :basic_time %></th>
+           <th class="center"><%= User.human_attribute_name :work_time %></th>
+        <% end %>
         <!-- 8.5.2 destroyアクション -->
         <th></th>
       </tr>
@@ -16,10 +22,24 @@
 
     <% @users.each do |user| %>
       <tr>
-        <td><%= link_to user.name, user %></td>
-        <!-- 8.5.2 destroyアクション -->
         <td>
+          <!-- 9.3.1 モーダルウインドウを表示(管理者権限の明確化) -->
+          <% if current_user.admin? %>
+            <%= link_to user.name, user %>
+          <% else %>
+            <%= user.name %>
+          <% end %>
+        </td>
+        <!-- 8.5.2 destroyアクション -->
+        <!-- 9.3.1 モーダルウインドウを表示(管理者権限の明確化) -->
+        <td class="center"><%= user.department.present? ? user.department : "未所属" %></td>
+        <% if current_user.admin? %>
+          <td class="center"><%= format_basic_info(user.basic_time) %></td>
+          <td class="center"><%= format_basic_info(user.work_time) %></td>
+        <% end %>
+        <td class="center">
           <% if current_user.admin? && !current_user?(user) %>
+            <%= link_to "基本情報編集", edit_basic_info_user_path(user), remote: true, class: "btn btn-success" %>
             <%= link_to "削除", user, method: :delete,
                 data: { confirm: "削除してよろしいですか？" },
                 class: "btn btn-danger" %>
@@ -31,3 +51,7 @@
   <!-- 8.4.2 ページネーションを使おう -->
   <%= will_paginate %>
 </div>
+
+<!-- 9.3.1 モーダルウインドウを表示(管理者権限の明確化) -->
+<!--モーダルウインドウ表示-->
+<div id="edit-basic-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
