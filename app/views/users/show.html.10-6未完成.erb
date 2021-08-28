@@ -16,8 +16,7 @@
     <tr>
       <td>所属：<%= @user.department.present? ? @user.department : "未所属" %></td>
       <td>名前：<%= @user.name %></td>
-      <!-- 10.7.1 出勤日数を表示 -->
-      <td>出勤日数：<%= @worked_sum %>日</td>
+      <td>出勤日数</td>
       <!-- ##10.3 "ユーザー"の月日を一覧表示 -->
       <td>月末日：<%= l(@last_day, format: :short) %></td>
     </tr>
@@ -64,35 +63,10 @@
       　　<td><%= l(day.started_at, format: :time) if day.started_at.present? %></td>
       　　<!-- 10.6.2 updateアクションを完成/退勤登録ボタン -->
       　　<td><%= l(day.finished_at, format: :time) if day.finished_at.present? %></td>
-      　　<td>
-            <!-- 10.8 在社時間を計算 -->
-            <% if day.started_at.present? && day.finished_at.present? %>
-             <!-- 10.9.2 累計在社時間の計算/ 勤怠表を仕上げ -->
-             <%= str_times = working_times(day.started_at, day.finished_at) %>
-             <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
-            <% end %>
-      　　</td>
+      　　<td></td>
       　　<td></td>
     　　</tr>
     　<% end %>
     </tbody>
-    
-    <!-- 10.9 勤怠表を仕上げ -->
-    <tfoot>
-      <!--rouspan:縦結合、colspan:横結合-->
-      <tr>
-        <td colspan="2">累計日数</td>
-        <td colspan="2">総合勤務時間</td>
-        <td colspan="2">累計在社時間</td>
-        <td colspan="2"></td>
-      </tr>
-      <tr>
-        <td colspan="2"><%= @attendances.count %></td>
-        <!-- 10.9.1 総合勤務時間の計算/ 勤怠表を仕上げ -->
-        <td colspan="2"><%= format_basic_info(@user.work_time).to_f * @worked_sum %></td>
-        <!-- 10.9.2 累計在社時間の計算/ 勤怠表を仕上げ -->
-        <td colspan="2"><%= format("%.2f", @total_workingtimes.to_f) %></td>
-      </tr>
-    </tfoot>
   </table>
 </div>

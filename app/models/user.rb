@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  ##10.1.1 【1対多】の関連付け
+  has_many :attendances, dependent: :destroy
   ## 7.1.2 rememberメソッドを作る
   # 「remember_token」という仮想の属性を作成します。
   attr_accessor :remember_token

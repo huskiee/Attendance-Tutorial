@@ -9,7 +9,24 @@
   text-align: center;
 }
 
+//*10.2.3  月日と曜日を表示
+/* ユーザー勤怠情報テーブル */
+
+#table-attendances {
+  th {
+    vertical-align: middle;
+    text-align: center;
+  }
+  td {
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+
+
 //5.5 ラベルとボタンの位置を微調整
+/* 入力フォーム */
+
 .label-signup {
   margin-top: 5px;
 }

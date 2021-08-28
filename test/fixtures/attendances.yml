@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  worked_on: 2021-08-26
+  started_at: 2021-08-26 11:41:20
+  finished_at: 2021-08-26 11:41:20
+  note: MyString
+  user: one
+
+two:
+  worked_on: 2021-08-26
+  started_at: 2021-08-26 11:41:20
+  finished_at: 2021-08-26 11:41:20
+  note: MyString
+  user: two

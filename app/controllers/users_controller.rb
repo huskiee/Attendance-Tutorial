@@ -14,6 +14,8 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   ## 8.5.2 destroyアクション
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
+  ##10.3 "ユーザー"の月日を一覧表示
+  before_action :set_one_month, only: :show
   
   ## 8.4 全てのユーザーを表示するページ
   def index
@@ -26,6 +28,12 @@ class UsersController < ApplicationController
   def show
   ## 9.3.1 モーダルウインドウを表示  
     ##@user = User.find(params[:id])
+    ##10.2 月日を一覧表示しよう(勤怠情報表示ページ)
+    ##10.3 "ユーザー"の月日を一覧表示
+    ##@first_day = Date.current.beginning_of_month
+    ##@last_day = @first_day.end_of_month
+    ##<!-- 10.7 出勤日数を表示 -->
+    @worked_sum = @attendances.where.not(started_at: nil).count
   end
   
   def new
@@ -110,6 +118,7 @@ class UsersController < ApplicationController
   
   ## 8.2.1 ユーザーにログインを要求する
   # beforeフィルター
+  
      ## 8.5.2 destroyアクション
     # paramsハッシュからユーザーを取得します。
     def set_user
@@ -129,7 +138,7 @@ class UsersController < ApplicationController
   ## 8.2.2 正しいユーザーであることを要求する
   # アクセスしたユーザーが現在ログインしているユーザーか確認します。
     def correct_user
-      @user = User.find(params[:id])
+      ##@user = User.find(params[:id])
       ## 8.2.2 正しいユーザーであることを要求する
       #redirect_to(root_url) unless @user == current_user
       redirect_to(root_url) unless current_user?(@user)

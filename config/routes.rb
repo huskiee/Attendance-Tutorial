@@ -13,9 +13,11 @@ Rails.application.routes.draw do
 
   ## 9.3.1 モーダルウインドウを表示  
   resources :users do
-   member do
-     get 'edit_basic_info'
-     patch 'update_basic_info'
-   end
+    member do
+      get 'edit_basic_info'
+      patch 'update_basic_info'
+    end
+    ##10.5.1 ルーティングを設定/出勤登録ボタン
+    resources :attendances, only: :update
   end
 end
