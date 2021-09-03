@@ -116,38 +116,39 @@ class UsersController < ApplicationController
   
   
   
+  ## 11.1.3 勤怠情報ページのアクション作成でset_userアクションをapplicationコントローラーへ引越し
   ## 8.2.1 ユーザーにログインを要求する
   # beforeフィルター
   
      ## 8.5.2 destroyアクション
     # paramsハッシュからユーザーを取得します。
-    def set_user
-      @user = User.find(params[:id])
-    end
+    ##def set_user
+      ##@user = User.find(params[:id])
+    ##end
 
     # ログイン済みのユーザーか確認します。
-    def logged_in_user
-      unless logged_in?
+    ##def logged_in_user
+      ##unless logged_in?
         ## 8.5.2 destroyアクション
-        store_location
-        flash[:danger] = "ログインしてください。"
-        redirect_to login_url
-      end
-    end
+        ##store_location
+        ##flash[:danger] = "ログインしてください。"
+        ##redirect_to login_url
+      ##end
+    ##end
   
   ## 8.2.2 正しいユーザーであることを要求する
   # アクセスしたユーザーが現在ログインしているユーザーか確認します。
-    def correct_user
+    ##def correct_user
       ##@user = User.find(params[:id])
       ## 8.2.2 正しいユーザーであることを要求する
       #redirect_to(root_url) unless @user == current_user
-      redirect_to(root_url) unless current_user?(@user)
-    end
+      ##redirect_to(root_url) unless current_user?(@user)
+    ##end
   
   ## 8.5.2 destroyアクション
   # システム管理権限所有かどうか判定します。
-    def admin_user
-      redirect_to root_url unless current_user.admin?
-    end
+    ##def admin_user
+      ##redirect_to root_url unless current_user.admin?
+    ##end
 
 end
